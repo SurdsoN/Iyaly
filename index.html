@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iyaly — Profumeria Italiana | Ambassador Program</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root{
+    --ink:#1B2A28;
+    --paper:#F6F1E7;
+    --terracotta:#C1613B;
+    --terracotta-dim:#a8532f;
+    --olive:#55613E;
+    --gold:#B08D3E;
+    --sand:#EAE0C8;
+    --rose:#B23A5E;
+    --line: rgba(27,42,40,0.14);
+    --space-1: 8px;
+    --space-2: 16px;
+    --space-3: 24px;
+    --space-4: 40px;
+    --space-5: 64px;
+    --space-6: 96px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--terracotta);
+  }
+  .wrap{
+    max-width:1160px;
+    margin:0 auto;
+    padding-left:var(--space-3);
+    padding-right:var(--space-3);
+  }
+  @media (max-width:640px){
+    .wrap{ padding-left:var(--space-2); padding-right:var(--space-2); }
+  }
+
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--terracotta);
+    outline-offset:3px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+  }
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(246,241,231,0.94);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:var(--space-2) var(--space-3);
+    max-width:1160px; margin:0 auto;
+    gap:12px; flex-wrap:wrap;
+  }
+  .nav-mark{ font-family:'Fraunces', serif; font-size:21px; letter-spacing:0.02em; }
+  .nav-tag{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--olive); letter-spacing:0.06em; }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'Work Sans', sans-serif;
+    font-weight:600; font-size:14px; letter-spacing:0.02em;
+    padding:13px 26px; border-radius:2px;
+    text-decoration:none; cursor:pointer; border:1px solid transparent;
+    transition:transform 0.18s ease, background 0.18s ease, color 0.18s ease;
+  }
+  .btn-primary{ background:var(--terracotta); color:var(--paper); }
+  .btn-primary:hover{ background:var(--terracotta-dim); transform:translateY(-1px); }
+  .btn-nav{ padding:10px 20px; font-size:13px; }
+  .btn-ghost{ background:transparent; border:1px solid var(--ink); color:var(--ink); }
+  .btn-ghost:hover{ background:var(--ink); color:var(--paper); }
+  .btn-block{ width:100%; justify-content:center; }
+
+  .badge-40{
+    display:inline-block;
+    background:var(--rose);
+    color:#fff;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.06em;
+    padding:3px 8px;
+    border-radius:2px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:86vh;
+    display:flex; align-items:flex-end;
+    background:
+      linear-gradient(180deg, rgba(27,42,40,0.18) 0%, rgba(27,42,40,0.82) 88%),
+      url('https://images.pexels.com/photos/12402362/pexels-photo-12402362.jpeg?auto=compress&cs=tinysrgb&w=1600') center 30% / cover no-repeat;
+  }
+  .hero-inner{ width:100%; padding:var(--space-6) var(--space-3) var(--space-5); max-width:1160px; margin:0 auto; color:var(--paper); }
+  .hero .eyebrow{ color:#E7B77E; }
+  .hero h1{ font-size:clamp(36px, 5.6vw, 68px); line-height:1.0; margin-top:var(--space-2); max-width:15ch; }
+  .hero h1 em{ font-style:italic; color:#E7B77E; }
+  .hero p{ max-width:50ch; margin-top:var(--space-3); font-size:17px; color:#EDE6D6; }
+  .hero-cta{ margin-top:var(--space-4); display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+  .hero-ghost{ border-color:#EDE6D6; color:#EDE6D6; }
+  .hero-ghost:hover{ background:#EDE6D6; color:var(--ink); }
+  .hero-note{ font-family:'IBM Plex Mono', monospace; font-size:12px; color:#C9BFA5; margin-top:var(--space-2); }
+
+  /* ---------- MARQUEE ---------- */
+  .marquee{ background:var(--ink); color:var(--paper); overflow:hidden; white-space:nowrap; border-bottom:1px solid rgba(246,241,231,0.15); }
+  .marquee-track{ display:inline-block; padding:14px 0; animation:scroll-left 30s linear infinite; font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.12em; }
+  .marquee-track span{ margin:0 28px; color:#D8CBA9; }
+  .marquee-track span.hi{ color:#E7B77E; font-weight:600; }
+  @keyframes scroll-left{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+
+  section{ padding:var(--space-6) 0; }
+  .section-head{ max-width:640px; margin-bottom:var(--space-5); }
+  .section-head h2{ font-size:clamp(28px, 3.6vw, 42px); margin-top:var(--space-1); }
+  .section-head p{ margin-top:var(--space-2); color:#3E4A44; font-size:16px; }
+
+  /* ---------- TWO WAYS IN ---------- */
+  .paths{ background:var(--paper); }
+  .paths-grid{ display:grid; grid-template-columns:1fr 1fr; gap:var(--space-3); }
+  @media (max-width:760px){ .paths-grid{ grid-template-columns:1fr; } }
+  .path-card{ border:1px solid var(--line); background:#fff; padding:var(--space-4); display:flex; flex-direction:column; gap:14px; }
+  .path-card.is-ambassador{ background:var(--ink); color:var(--paper); border-color:var(--ink); position:relative; }
+  .path-card.is-ambassador .eyebrow{ color:#E7B77E; }
+  .path-card h3{ font-size:26px; }
+  .path-card.is-ambassador h3{ color:var(--paper); }
+  .path-card ul{ margin:0; padding-left:18px; font-size:14.5px; color:#3E4A44; display:flex; flex-direction:column; gap:8px; }
+  .path-card.is-ambassador ul{ color:#CEC5AE; }
+  .path-card .big{ font-family:'Fraunces', serif; font-size:34px; margin-top:auto; }
+  .ribbon{
+    position:absolute; top:-1px; right:20px;
+    background:var(--rose); color:#fff;
+    font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.06em;
+    padding:6px 12px;
+  }
+
+  /* ---------- HOW EARNINGS WORK ---------- */
+  .earn-loop{ background:var(--sand); }
+  .earn-loop-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:var(--space-3); counter-reset:step; }
+  @media (max-width:820px){ .earn-loop-grid{ grid-template-columns:1fr; } }
+  .earn-step{ background:#fff; border:1px solid var(--line); display:flex; flex-direction:column; }
+  .earn-step-visual{ width:100%; height:180px; display:flex; align-items:center; justify-content:center; }
+  .earn-step-visual svg{ width:88px; height:88px; }
+  .earn-step-body{ padding:var(--space-3); display:flex; flex-direction:column; gap:8px; }
+  .earn-step-num{ counter-increment:step; font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.1em; color:var(--rose); }
+  .earn-step-num::before{ content:"STEP " counter(step); }
+  .earn-step h4{ font-family:'Fraunces', serif; font-size:20px; font-weight:500; margin:0; }
+  .earn-step p{ margin:0; font-size:14.5px; color:#3E4A44; }
+
+  /* ---------- PUGLIA FORMULARY ---------- */
+  .puglia{ background:var(--sand); }
+  .formulary-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:1px; background:var(--ink); border:1px solid var(--ink); }
+  .formulary-card{ background:var(--paper); display:flex; flex-direction:column; }
+  .formulary-photo{ width:100%; height:170px; object-fit:cover; }
+  .formulary-body{ padding:var(--space-3); display:flex; flex-direction:column; gap:10px; flex:1; }
+  .formulary-top{ display:flex; justify-content:space-between; align-items:flex-start; }
+  .formulary-code{ font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--olive); }
+  .formulary-card h3{ font-size:24px; margin-top:2px; }
+  .formulary-place{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#8A7F63; }
+  .accord-bar{ display:flex; height:7px; border-radius:2px; overflow:hidden; }
+  .accord-bar span{ display:block; height:100%; }
+  .accord-labels{ display:flex; justify-content:space-between; font-size:12.5px; color:#3E4A44; }
+  .price-row{ margin-top:auto; padding-top:10px; border-top:1px dashed var(--line); display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .price-retail{ font-family:'IBM Plex Mono', monospace; font-size:13px; color:#8A7F63; text-decoration:line-through; }
+  .price-ambassador{ font-family:'IBM Plex Mono', monospace; font-size:18px; font-weight:600; color:var(--rose); }
+
+  /* ---------- NUMBERED COLLECTION ---------- */
+  .collection{ background:var(--paper); }
+  .collection-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:var(--space-3); }
+  .num-card{ border:1px solid var(--line); background:#fff; overflow:hidden; display:flex; flex-direction:column; transition:box-shadow 0.2s ease, transform 0.2s ease; }
+  .num-card:hover{ box-shadow:0 10px 24px rgba(27,42,40,0.08); transform:translateY(-3px); }
+  .num-photo{ width:100%; height:150px; object-fit:cover; }
+  .num-body{ padding:var(--space-3); display:flex; flex-direction:column; gap:8px; flex:1; }
+  .num-card .num{ font-family:'Fraunces', serif; font-size:34px; }
+  .num-card .tag{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--olive); }
+  .num-card .price-row{ margin-top:auto; }
+
+  /* ---------- MARKETING PLAN / RANK LADDER ---------- */
+  .plan{ background:var(--ink); color:var(--paper); }
+  .plan .eyebrow{ color:#E7B77E; }
+  .plan h2{ color:var(--paper); }
+  .plan .section-head p{ color:#CEC5AE; }
+  .rank-table{ width:100%; border-collapse:collapse; font-size:14.5px; }
+  .rank-table th{
+    text-align:left; font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
+    color:#B9AF97; padding:10px 12px; border-bottom:1px solid rgba(246,241,231,0.2);
+  }
+  .rank-table td{ padding:12px; border-bottom:1px solid rgba(246,241,231,0.08); vertical-align:middle; }
+  .rank-name{ font-family:'Fraunces', serif; font-size:17px; display:flex; align-items:center; gap:10px; }
+  .rank-dot{ width:12px; height:12px; border-radius:50%; flex:none; }
+  .rank-bar-wrap{ background:rgba(246,241,231,0.12); height:6px; border-radius:3px; overflow:hidden; min-width:90px; }
+  .rank-bar{ height:100%; background:linear-gradient(90deg, var(--terracotta), var(--gold)); }
+  .rank-table .earn{ font-family:'IBM Plex Mono', monospace; color:#E7B77E; }
+  .rank-table-wrap{ overflow-x:auto; border:1px solid rgba(246,241,231,0.15); }
+  .plan-top{
+    display:grid; grid-template-columns:1fr 1fr; gap:var(--space-3);
+    background:linear-gradient(120deg, rgba(178,58,94,0.18), rgba(176,141,62,0.12));
+    border:1px solid rgba(231,183,126,0.35);
+    padding:var(--space-3); margin-bottom:var(--space-3);
+  }
+  @media (max-width:640px){ .plan-top{ grid-template-columns:1fr; } }
+  .plan-top div h4{ margin:0 0 4px; font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#E7B77E; }
+  .plan-top div p{ margin:0; font-size:22px; font-family:'Fraunces', serif; }
+  .plan-disclaimer{ margin-top:var(--space-3); font-size:12.5px; color:#9C927A; max-width:70ch; line-height:1.6; }
+
+  /* ---------- STORY ---------- */
+  .story{ background:var(--sand); }
+  .story-grid{ display:grid; grid-template-columns:1.05fr 0.95fr; gap:var(--space-5); align-items:center; }
+  @media (max-width:820px){ .story-grid{ grid-template-columns:1fr; } }
+  .story img{ width:100%; height:100%; object-fit:cover; min-height:320px; border:1px solid var(--line); }
+  .story h2{ font-size:clamp(28px,3.4vw,40px); margin-top:var(--space-1); }
+  .story p{ color:#3E4A44; margin-top:var(--space-2); }
+  .story-facts{ display:grid; grid-template-columns:1fr 1fr; gap:var(--space-3); margin-top:var(--space-4); border-top:1px solid var(--line); padding-top:var(--space-3); }
+  .story-facts div h4{ font-family:'Fraunces', serif; font-weight:500; font-size:15px; margin:0 0 6px; color:var(--terracotta); }
+  .story-facts div p{ margin:0; font-size:14px; color:#5C6A63; }
+
+  /* ---------- KIT BAND ---------- */
+  .kit-band{ background:var(--ink); }
+  .kit-split{ display:grid; grid-template-columns:1fr 1fr; align-items:stretch; min-height:56vh; }
+  @media (max-width:820px){ .kit-split{ grid-template-columns:1fr; min-height:auto; } }
+  .kit-panel{ color:var(--paper); padding:var(--space-6) var(--space-5) var(--space-6) var(--space-3); display:flex; flex-direction:column; justify-content:center; }
+  @media (max-width:820px){ .kit-panel{ padding:var(--space-5) var(--space-3); order:2; } }
+  .kit-panel .eyebrow{ color:#E7B77E; }
+  .kit-panel h2{ color:var(--paper); font-size:clamp(28px,3.2vw,44px); margin-top:var(--space-1); max-width:14ch; }
+  .kit-panel p{ color:#D8CBA9; margin-top:var(--space-2); max-width:44ch; }
+  .kit-stats{ display:flex; gap:var(--space-2); flex-wrap:wrap; margin-top:var(--space-4); }
+  .kit-stat{ border:1px solid rgba(246,241,231,0.22); padding:12px 16px; min-width:120px; }
+  .kit-stat b{ display:block; font-family:'Fraunces', serif; font-size:22px; color:var(--paper); font-weight:500; }
+  .kit-stat span{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:#B9AF97; }
+  .kit-media{ position:relative; min-height:320px; }
+  .kit-media img{ width:100%; height:100%; object-fit:cover; position:absolute; inset:0; }
+  @media (max-width:820px){ .kit-media{ min-height:280px; order:1; } }
+
+  /* ---------- FINAL CTA ---------- */
+  .cta-band{ background:var(--terracotta); color:var(--paper); text-align:center; }
+  .cta-band h2{ color:var(--paper); font-size:clamp(30px, 4.4vw, 52px); max-width:18ch; margin:0 auto; }
+  .cta-band p{ max-width:48ch; margin:var(--space-2) auto 0; color:#F6E3D3; }
+  .cta-band .btn-primary{ background:var(--ink); margin-top:var(--space-4); }
+  .cta-band .btn-primary:hover{ background:#0f1a18; }
+  .cta-band .hero-note{ color:#F6E3D3; margin-top:var(--space-2); }
+
+  /* ---------- FOOTER ---------- */
+  footer{ background:var(--paper); border-top:1px solid var(--line); padding:var(--space-4) 0 var(--space-5); }
+  .footer-grid{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:var(--space-3); font-size:13px; color:#5C6A63; }
+  .disclosure{ max-width:none; font-size:12.5px; color:#7A7263; margin-top:var(--space-3); border-top:1px solid var(--line); padding-top:var(--space-3); line-height:1.6; }
+
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.is-visible{ opacity:1; transform:translateY(0); }
+
+  /* ---------- STAGGERED CHILD REVEAL ---------- */
+  .stagger > *{ opacity:0; transform:translateY(16px); transition:opacity 0.6s ease, transform 0.6s ease; }
+  .stagger.is-visible > *{ opacity:1; transform:translateY(0); }
+  .stagger.is-visible > *:nth-child(1){ transition-delay:0.03s; }
+  .stagger.is-visible > *:nth-child(2){ transition-delay:0.10s; }
+  .stagger.is-visible > *:nth-child(3){ transition-delay:0.17s; }
+  .stagger.is-visible > *:nth-child(4){ transition-delay:0.24s; }
+  .stagger.is-visible > *:nth-child(5){ transition-delay:0.31s; }
+  .stagger.is-visible > *:nth-child(6){ transition-delay:0.38s; }
+  .stagger.is-visible > *:nth-child(7){ transition-delay:0.45s; }
+
+  /* ---------- HERO ENTRANCE ---------- */
+  @keyframes hero-up{ from{ opacity:0; transform:translateY(26px); } to{ opacity:1; transform:translateY(0); } }
+  .hero-inner > .eyebrow{ animation:hero-up 0.8s ease both; }
+  .hero-inner > h1{ animation:hero-up 0.8s ease 0.10s both; }
+  .hero-inner > p{ animation:hero-up 0.8s ease 0.22s both; }
+  .hero-inner > .hero-cta{ animation:hero-up 0.8s ease 0.34s both; }
+  .hero-inner > .hero-note{ animation:hero-up 0.8s ease 0.44s both; }
+
+  /* ---------- MICRO-INTERACTIONS ---------- */
+  .btn{ will-change:transform; }
+  .btn:active{ transform:scale(0.96); }
+  .btn-primary:active{ background:var(--terracotta-dim); }
+
+  .formulary-card{ overflow:hidden; transition:box-shadow 0.25s ease, transform 0.25s ease; }
+  .formulary-card:hover{ box-shadow:0 12px 26px rgba(27,42,40,0.10); transform:translateY(-3px); }
+  .formulary-photo{ transition:transform 0.5s ease; }
+  .formulary-card:hover .formulary-photo{ transform:scale(1.06); }
+
+  .num-photo{ transition:transform 0.5s ease; }
+  .num-card:hover .num-photo{ transform:scale(1.06); }
+
+  .path-card{ transition:box-shadow 0.25s ease, transform 0.25s ease; }
+  .path-card:hover{ transform:translateY(-4px); box-shadow:0 14px 30px rgba(27,42,40,0.10); }
+
+  .earn-step{ transition:box-shadow 0.25s ease, transform 0.25s ease; }
+  .earn-step:hover{ transform:translateY(-4px); box-shadow:0 14px 28px rgba(27,42,40,0.08); }
+  .earn-step-visual svg{ transition:transform 0.4s ease; }
+  .earn-step:hover .earn-step-visual svg{ transform:scale(1.08) rotate(-2deg); }
+
+  .kit-stat{ transition:background 0.25s ease, transform 0.25s ease; }
+  .kit-stat:hover{ background:rgba(246,241,231,0.08); transform:translateY(-2px); }
+
+  .rank-table tbody tr{ transition:background 0.2s ease; }
+  .rank-table tbody tr:hover{ background:rgba(246,241,231,0.06); }
+  .rank-bar{ transition:width 1s cubic-bezier(0.22,1,0.36,1); }
+
+  @keyframes ribbon-pulse{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.06); } }
+  .ribbon{ animation:ribbon-pulse 2.6s ease-in-out infinite; }
+
+  .nav-mark{ transition:letter-spacing 0.3s ease; }
+  .nav:hover .nav-mark{ letter-spacing:0.05em; }
+
+  @media (prefers-reduced-motion: reduce){
+    .hero-inner > *, .ribbon{ animation:none !important; }
+  }
+
+  /* ---------- MOBILE RESPONSIVE REFINEMENTS ---------- */
+  @media (max-width:900px){
+    section{ padding:var(--space-5) 0; }
+    .section-head{ margin-bottom:var(--space-4); }
+  }
+  @media (max-width:640px){
+    :root{ --space-6:56px; --space-5:40px; }
+    .nav-inner{ padding:var(--space-2); }
+    .nav-mark{ font-size:19px; }
+    .btn-nav{ padding:9px 14px; font-size:12.5px; }
+    .hero{ min-height:auto; }
+    .hero-inner{ padding-top:var(--space-5); padding-bottom:var(--space-4); }
+    .hero h1{ max-width:100%; }
+    .hero-cta{ flex-direction:column; align-items:stretch; }
+    .hero-cta .btn{ width:100%; justify-content:center; text-align:center; }
+    section{ padding:var(--space-4) 0; }
+    .section-head p{ font-size:15px; }
+    .path-card{ padding:var(--space-3); }
+    .path-card h3{ font-size:22px; }
+    .earn-step-visual{ height:140px; }
+    .earn-step-visual svg{ width:70px; height:70px; }
+    .rank-table{ font-size:13px; }
+    .rank-table th, .rank-table td{ padding:9px 8px; }
+    .rank-bar-wrap{ min-width:60px; }
+    .plan-top div p{ font-size:19px; }
+    .story-facts{ grid-template-columns:1fr; gap:var(--space-2); }
+    .kit-panel{ padding:var(--space-4) var(--space-2); }
+    .kit-panel h2{ max-width:100%; }
+    .kit-stats{ gap:10px; }
+    .kit-stat{ min-width:100px; padding:10px 12px; flex:1 1 auto; }
+    .kit-media{ min-height:220px; }
+    .cta-band h2{ max-width:100%; }
+    .footer-grid{ flex-direction:column; gap:8px; }
+    .marquee-track{ animation-duration:20s; }
+    .formulary-photo, .num-photo{ height:150px; }
+    .num-photo{ height:130px; }
+  }
+  @media (max-width:400px){
+    .hero h1{ font-size:32px; }
+    .nav-tag{ display:none; }
+    .earn-loop-grid, .formulary-grid, .collection-grid{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <div>
+        <div class="nav-mark">Iyaly</div>
+        <div class="nav-tag">Profumeria Italiana</div>
+      </div>
+      <a class="btn btn-primary btn-nav" href="https://iyaly.com/referral/AR-246-7333" target="_blank" rel="noopener">Join — 40% Off For Life</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Made in Italy · Ambassador Program</div>
+      <h1>Don't just wear it.<br><em>Own the business.</em></h1>
+      <p>Iyaly makes perfume in Italy — and pays you for sharing it. Join as an Ambassador and pay <strong>40% less on every product, for life</strong>, while earning points and real money on your own orders and everyone you introduce.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="https://iyaly.com/referral/AR-246-7333" target="_blank" rel="noopener">Become an Ambassador — 40% Off For Life →</a>
+      </div>
+      <div class="hero-note">Prefer to just shop? <a href="https://iyaly.com/referral/AR-246-7333" target="_blank" rel="noopener" style="text-decoration:underline; color:#EDE6D6;">Buy as a Client at retail price</a> — opens through my personal Iyaly link.</div>
+    </div>
+  </header>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="hi">-40% FOR LIFE AS AN AMBASSADOR</span><span>·</span><span class="hi">EARN ON YOUR OWN ORDERS TOO</span><span>·</span><span>MADE IN ITALY</span><span>·</span><span>FOUNDED 2022, MILAN</span><span>·</span><span>PROFUMO DI PUGLIA</span><span>·</span><span>EARN AS YOUR NETWORK GROWS</span><span>·</span>
+      <span class="hi">-40% FOR LIFE AS AN AMBASSADOR</span><span>·</span><span class="hi">EARN ON YOUR OWN ORDERS TOO</span><span>·</span><span>MADE IN ITALY</span><span>·</span><span>FOUNDED 2022, MILAN</span><span>·</span><span>PROFUMO DI PUGLIA</span><span>·</span><span>EARN AS YOUR NETWORK GROWS</span><span>·</span>
+    </div>
+  </div>
+
+  <!-- ================= TWO WAYS IN ================= -->
+  <section class="paths">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">How This Works</div>
+        <h2>Buy it, or build with it.</h2>
+        <p>Every Iyaly product is available two ways through my link. One is a purchase. The other is a business. Here's the difference, in plain terms.</p>
+      </div>
+      <div class="paths-grid reveal stagger">
+        <div class="path-card is-ambassador">
+          <span class="ribbon">Recommended</span>
+          <div class="eyebrow">The Ambassador Path</div>
+          <h3>Join as an Ambassador</h3>
+          <ul>
+            <li><strong style="color:#E7B77E;">40% off every Iyaly product, for life</strong> — perfume, skincare, haircare, everything.</li>
+            <li><strong style="color:#E7B77E;">You earn points and money</strong> on your own orders, not just a discount.</li>
+            <li>You also earn on every order placed by anyone you introduce — they can shop as a Client or join as an Ambassador themselves.</li>
+            <li>Climb Iyaly's rank ladder, from Clay to Rose Gold, with rising monthly earning potential — see the plan below.</li>
+          </ul>
+          <div class="big">-40% for life + earnings</div>
+          <a class="btn btn-primary btn-block" href="https://iyaly.com/referral/AR-246-7333" target="_blank" rel="noopener">Become an Ambassador</a>
+        </div>
+        <div class="path-card">
+          <div class="eyebrow" style="color:var(--olive);">The Simple Path</div>
+          <h3>Shop as a Client</h3>
+          <ul>
+            <li>Buy any Iyaly product at the regular retail price shown on site.</li>
+            <li>No sign-up, no commitment, no minimum orders.</li>
+            <li>You don't earn anything yourself — but you can switch to Ambassador anytime to start earning on your own orders too.</li>
+          </ul>
+          <div class="big">Retail price</div>
+          <a class="btn btn-ghost btn-block" href="https://iyaly.com/referral/AR-246-7333" target="_blank" rel="noopener">Shop at Retail Price</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= HOW EARNINGS WORK ================= -->
+  <section class="earn-loop">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">For Ambassadors</div>
+        <h2>How the money actually moves.</h2>
+        <p>This is the part people ask about most. Here's exactly how an Ambassador earns — no jargon.</p>
+      </div>
+      <div class="earn-loop-grid reveal stagger">
+        <div class="earn-step">
+          <div class="earn-step-visual" style="background:#EFE3D3;">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="42" y="30" width="16" height="42" rx="3" fill="var(--terracotta)"/>
+              <rect x="46" y="22" width="8" height="10" rx="2" fill="var(--ink)"/>
+              <rect x="44" y="18" width="12" height="6" rx="2" fill="var(--gold)"/>
+              <circle cx="74" cy="66" r="15" fill="var(--rose)"/>
+              <text x="74" y="70" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" fill="#fff">-40%</text>
+              <circle cx="22" cy="60" r="7" fill="none" stroke="var(--gold)" stroke-width="2"/>
+              <text x="22" y="64" text-anchor="middle" font-family="Fraunces, serif" font-size="9" fill="var(--gold)">€</text>
+            </svg>
+          </div>
+          <div class="earn-step-body">
+            <div class="earn-step-num"></div>
+            <h4>You buy at -40%, and you earn on it</h4>
+            <p>Every product you order for yourself is already 40% cheaper — and it also earns you network points and money, not just a discount.</p>
+          </div>
+        </div>
+        <div class="earn-step">
+          <div class="earn-step-visual" style="background:#E5E7DC;">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="26" cy="50" r="12" fill="var(--ink)"/>
+              <path d="M35 50 H65" stroke="var(--olive)" stroke-width="4"/>
+              <circle cx="74" cy="30" r="9" fill="var(--terracotta)"/>
+              <circle cx="74" cy="70" r="9" fill="var(--rose)"/>
+              <path d="M40 44 L67 30" stroke="var(--terracotta)" stroke-width="3" stroke-dasharray="3 4"/>
+              <path d="M40 56 L67 70" stroke="var(--rose)" stroke-width="3" stroke-dasharray="3 4"/>
+              <path d="M22 46 a4 4 0 0 1 8 0 M22 54 a4 4 0 0 0 8 0" stroke="var(--paper)" stroke-width="2" fill="none"/>
+            </svg>
+          </div>
+          <div class="earn-step-body">
+            <div class="earn-step-num"></div>
+            <h4>You share your link, anyone can use it</h4>
+            <p>Send your personal link to friends. They can buy as a Client at retail price, or join as an Ambassador themselves — either way, their order earns you points and commission.</p>
+          </div>
+        </div>
+        <div class="earn-step">
+          <div class="earn-step-visual" style="background:#EAD9DE;">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="18" y="62" width="12" height="18" fill="#9AA0A6"/>
+              <rect x="36" y="52" width="12" height="28" fill="var(--terracotta)"/>
+              <rect x="54" y="38" width="12" height="42" fill="var(--olive)"/>
+              <rect x="72" y="22" width="12" height="58" fill="var(--gold)"/>
+              <path d="M78 14 l2.4 5 5.6 0.6 -4.2 3.8 1.2 5.6 -5 -3 -5 3 1.2 -5.6 -4.2 -3.8 5.6 -0.6 z" fill="var(--rose)"/>
+            </svg>
+          </div>
+          <div class="earn-step-body">
+            <div class="earn-step-num"></div>
+            <h4>Your network compounds your rank</h4>
+            <p>Your own orders plus everyone you've introduced all stack into your total network points — which climbs you up the ladder from Clay toward Rose Gold, and raises your monthly earning level.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PUGLIA FORMULARY ================= -->
+  <section class="puglia">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">The Signature Line</div>
+        <h2>Profumo di Puglia</h2>
+        <p>Five scents named for towns and byways across Apulia. Each pairs a single, legible accord — and each is 40% cheaper for life once you're an Ambassador.</p>
+      </div>
+
+      <div class="formulary-grid reveal stagger">
+        <div class="formulary-card">
+          <img class="formulary-photo" src="https://images.pexels.com/photos/23070578/pexels-photo-23070578.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Perfume bottle resting among green leaves">
+          <div class="formulary-body">
+            <div class="formulary-top"><span class="formulary-code">PP001</span></div>
+            <div><span class="formulary-place">Canusium</span><h3>Fig &amp; Leaves</h3></div>
+            <div class="accord-labels"><span>Fig</span><span>Green Leaf</span></div>
+            <div class="accord-bar"><span style="width:55%; background:var(--olive);"></span><span style="width:45%; background:#8C7A45;"></span></div>
+            <div class="price-row"><span class="price-retail">€69.99</span><span class="price-ambassador">€41.99</span><span class="badge-40">-40% Ambassador</span></div>
+          </div>
+        </div>
+
+        <div class="formulary-card">
+          <img class="formulary-photo" src="https://images.pexels.com/photos/13767420/pexels-photo-13767420.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Gold perfume bottle with soft blurred background">
+          <div class="formulary-body">
+            <div class="formulary-top"><span class="formulary-code">PP002</span></div>
+            <div><span class="formulary-place">Egnatia</span><h3>Olive &amp; Bergamot</h3></div>
+            <div class="accord-labels"><span>Olive Leaf</span><span>Bergamot</span></div>
+            <div class="accord-bar"><span style="width:50%; background:var(--olive);"></span><span style="width:50%; background:var(--gold);"></span></div>
+            <div class="price-row"><span class="price-retail">€69.99</span><span class="price-ambassador">€41.99</span><span class="badge-40">-40% Ambassador</span></div>
+          </div>
+        </div>
+
+        <div class="formulary-card">
+          <img class="formulary-photo" src="https://images.pexels.com/photos/30981935/pexels-photo-30981935.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Perfume bottle with wood base in warm dramatic light">
+          <div class="formulary-body">
+            <div class="formulary-top"><span class="formulary-code">PP003</span></div>
+            <div><span class="formulary-place">Kailia</span><h3>Herbs &amp; Woods</h3></div>
+            <div class="accord-labels"><span>Aromatic Herbs</span><span>Dry Woods</span></div>
+            <div class="accord-bar"><span style="width:48%; background:#7C8A5C;"></span><span style="width:52%; background:#6B4A32;"></span></div>
+            <div class="price-row"><span class="price-retail">€69.99</span><span class="price-ambassador">€41.99</span><span class="badge-40">-40% Ambassador</span></div>
+          </div>
+        </div>
+
+        <div class="formulary-card">
+          <img class="formulary-photo" src="https://images.pexels.com/photos/12456278/pexels-photo-12456278.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Perfume bottle with golden cap in bright light">
+          <div class="formulary-body">
+            <div class="formulary-top"><span class="formulary-code">PP004</span></div>
+            <div><span class="formulary-place">Leuca</span><h3>Almond &amp; Jasmine</h3></div>
+            <div class="accord-labels"><span>Almond</span><span>Jasmine</span></div>
+            <div class="accord-bar"><span style="width:52%; background:#C9A15E;"></span><span style="width:48%; background:#E7E0C8;"></span></div>
+            <div class="price-row"><span class="price-retail">€69.99</span><span class="price-ambassador">€41.99</span><span class="badge-40">-40% Ambassador</span></div>
+          </div>
+        </div>
+
+        <div class="formulary-card">
+          <img class="formulary-photo" src="https://images.pexels.com/photos/31612014/pexels-photo-31612014.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Perfume bottle on mossy rocks with ocean backdrop">
+          <div class="formulary-body">
+            <div class="formulary-top"><span class="formulary-code">PP006</span></div>
+            <div><span class="formulary-place">Taras</span><h3>Flowers &amp; Sea Breeze</h3></div>
+            <div class="accord-labels"><span>White Florals</span><span>Sea Air</span></div>
+            <div class="accord-bar"><span style="width:60%; background:#D8C6D8;"></span><span style="width:40%; background:#9FBFC2;"></span></div>
+            <div class="price-row"><span class="price-retail">€69.99</span><span class="price-ambassador">€41.99</span><span class="badge-40">-40% Ambassador</span></div>
+          </div>
+        </div>
+
+        <div class="formulary-card">
+          <div class="formulary-body" style="justify-content:center; gap:var(--space-2); min-height:100%;">
+            <div class="eyebrow" style="color:var(--olive);">Full Library</div>
+            <p style="margin:0; color:#3E4A44; font-size:15px;">Five scents shown here — the full Profumo di Puglia range and testers are on the Ambassador storefront, all at -40% once you join.</p>
+            <a class="btn btn-ghost" href="https://iyaly.com/referral/AR-246-7333" target="_blank" rel="noopener">See all Puglia scents</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= NUMBERED COLLECTION ================= -->
+  <section class="collection">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">The Numbered Collection</div>
+        <h2>A code, not a name.</h2>
+        <p>Iyaly's core fragrance range is catalogued by number — an original composition in the spirit of a well-loved scent family, made in Italy, in 30ml and 100ml. Ambassadors pay 40% less on every code, permanently.</p>
+      </div>
+
+      <div class="collection-grid reveal stagger">
+        <div class="num-card">
+          <img class="num-photo" src="https://images.pexels.com/photos/12402360/pexels-photo-12402360.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Perfume bottle with gold cap, minimalist studio shot">
+          <div class="num-body">
+            <div class="num">305</div>
+            <div class="tag">Unisex · 100ml / 30ml</div>
+            <div class="price-row"><span class="price-retail">€29.50</span><span class="price-ambassador">€17.70</span><span class="badge-40">-40%</span></div>
+          </div>
+        </div>
+        <div class="num-card">
+          <img class="num-photo" src="https://images.pexels.com/photos/12402366/pexels-photo-12402366.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Perfume bottle with gold cap, close-up studio shot">
+          <div class="num-body">
+            <div class="num">306</div>
+            <div class="tag">For Her · 100ml / 30ml</div>
+            <div class="price-row"><span class="price-retail">€29.50</span><span class="price-ambassador">€17.70</span><span class="badge-40">-40%</span></div>
+          </div>
+        </div>
+        <div class="num-card">
+          <img class="num-photo" src="https://images.pexels.com/photos/8796322/pexels-photo-8796322.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Black perfume bottle with gold label, studio shot">
+          <div class="num-body">
+            <div class="num">307</div>
+            <div class="tag">For Him · 100ml / 30ml</div>
+            <div class="price-row"><span class="price-retail">€33.00</span><span class="price-ambassador">€19.80</span><span class="badge-40">-40%</span></div>
+          </div>
+        </div>
+        <div class="num-card">
+          <img class="num-photo" src="https://images.pexels.com/photos/12402368/pexels-photo-12402368.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Perfume bottle with gold cap, minimalist white background">
+          <div class="num-body">
+            <div class="num">311</div>
+            <div class="tag">Unisex · 100ml / 30ml</div>
+            <div class="price-row"><span class="price-retail">€33.00</span><span class="price-ambassador">€19.80</span><span class="badge-40">-40%</span></div>
+          </div>
+        </div>
+        <div class="num-card">
+          <img class="num-photo" src="https://images.pexels.com/photos/29933686/pexels-photo-29933686.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Perfume bottle with red cap on textured fabric">
+          <div class="num-body">
+            <div class="num">314</div>
+            <div class="tag">For Her · 100ml / 30ml</div>
+            <div class="price-row"><span class="price-retail">€33.00</span><span class="price-ambassador">€19.80</span><span class="badge-40">-40%</span></div>
+          </div>
+        </div>
+        <div class="num-card">
+          <img class="num-photo" src="https://images.pexels.com/photos/33042805/pexels-photo-33042805.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Amber perfume bottle with wooden cap on stone surface">
+          <div class="num-body">
+            <div class="num">318</div>
+            <div class="tag">Unisex · 100ml / 30ml</div>
+            <div class="price-row"><span class="price-retail">€33.00</span><span class="price-ambassador">€19.80</span><span class="badge-40">-40%</span></div>
+          </div>
+        </div>
+        <div class="num-card">
+          <img class="num-photo" src="https://images.pexels.com/photos/12464896/pexels-photo-12464896.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Perfume bottle with silver cap and clean studio lighting">
+          <div class="num-body">
+            <div class="num">322</div>
+            <div class="tag">For Him · 100ml / 30ml</div>
+            <div class="price-row"><span class="price-retail">€33.00</span><span class="price-ambassador">€19.80</span><span class="badge-40">-40%</span></div>
+          </div>
+        </div>
+        <div class="num-card">
+          <div class="num-body" style="justify-content:center; height:100%;">
+            <div class="tag" style="color:var(--terracotta);">400+ SKUs</div>
+            <p style="margin:0; font-size:14px; color:#3E4A44;">Samples, testers, and the full numbered catalogue live on the storefront — all at -40% for Ambassadors, for life.</p>
+            <a class="btn btn-ghost" style="margin-top:4px;" href="https://iyaly.com/referral/AR-246-7333" target="_blank" rel="noopener">Browse the catalogue</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MARKETING PLAN / RANK LADDER ================= -->
+  <section class="plan">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">The Ambassador Path</div>
+        <h2>Ten ranks. One ladder.</h2>
+        <p>Every Ambassador starts at Clay and climbs by building network points — your own orders and your team's. Each rank unlocks a higher earning level. These are Iyaly's own published average figures per rank.</p>
+      </div>
+
+      <div class="plan-top reveal">
+        <div>
+          <h4>Top Rank</h4>
+          <p>Rose Gold</p>
+        </div>
+        <div>
+          <h4>Average Earnings Up To</h4>
+          <p>€6,200 / month</p>
+        </div>
+      </div>
+
+      <div class="rank-table-wrap reveal">
+        <table class="rank-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Network Points Required</th>
+              <th>Level</th>
+              <th>Average Earnings Up To</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><div class="rank-name"><span class="rank-dot" style="background:#B08D3E;"></span>Clay</div></td><td>300 pts</td><td><div class="rank-bar-wrap"><div class="rank-bar" style="width:3%;"></div></div> 3%</td><td class="earn">up to €20</td></tr>
+            <tr><td><div class="rank-name"><span class="rank-dot" style="background:#9AA0A6;"></span>Stone</div></td><td>700 pts</td><td><div class="rank-bar-wrap"><div class="rank-bar" style="width:6%;"></div></div> 6%</td><td class="earn">up to €69</td></tr>
+            <tr><td><div class="rank-name"><span class="rank-dot" style="background:#C1613B;"></span>Copper</div></td><td>1,300 pts</td><td><div class="rank-bar-wrap"><div class="rank-bar" style="width:9%;"></div></div> 9%</td><td class="earn">up to €168</td></tr>
+            <tr><td><div class="rank-name"><span class="rank-dot" style="background:#A8532F;"></span>Bronze</div></td><td>2,000 pts</td><td><div class="rank-bar-wrap"><div class="rank-bar" style="width:11%;"></div></div> 11%</td><td class="earn">up to €303</td></tr>
+            <tr><td><div class="rank-name"><span class="rank-dot" style="background:#2B2B2B;"></span>Iron</div></td><td>3,000 pts</td><td><div class="rank-bar-wrap"><div class="rank-bar" style="width:14%;"></div></div> 14%</td><td class="earn">up to €543</td></tr>
+            <tr><td><div class="rank-name"><span class="rank-dot" style="background:#4C7EA8;"></span>Steel</div></td><td>4,200 pts</td><td><div class="rank-bar-wrap"><div class="rank-bar" style="width:16%;"></div></div> 16%</td><td class="earn">up to €870</td></tr>
+            <tr><td><div class="rank-name"><span class="rank-dot" style="background:#2F5C8A;"></span>Titanium</div></td><td>5,800 pts</td><td><div class="rank-bar-wrap"><div class="rank-bar" style="width:18%;"></div></div> 18%</td><td class="earn">up to €1,250</td></tr>
+            <tr><td><div class="rank-name"><span class="rank-dot" style="background:#B7BDC4;"></span>Silver</div></td><td>7,500 pts</td><td><div class="rank-bar-wrap"><div class="rank-bar" style="width:21%;"></div></div> 21%</td><td class="earn">up to €1,800</td></tr>
+            <tr><td><div class="rank-name"><span class="rank-dot" style="background:#E0B84A;"></span>Gold</div></td><td>15,000 pts</td><td><div class="rank-bar-wrap"><div class="rank-bar" style="width:26%;"></div></div> 26%</td><td class="earn">up to €3,500</td></tr>
+            <tr><td><div class="rank-name"><span class="rank-dot" style="background:#B23A5E;"></span>Rose Gold</div></td><td>30,000 pts</td><td><div class="rank-bar-wrap"><div class="rank-bar" style="width:28%;"></div></div> 28%</td><td class="earn">up to €6,200</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="plan-disclaimer reveal">Figures above are Iyaly's own published average earnings per rank, shown as "up to" amounts. They describe potential, not a guarantee — actual results depend on personal effort, product sales, and network activity, and will vary Ambassador to Ambassador.</p>
+    </div>
+  </section>
+
+  <!-- ================= STORY ================= -->
+  <section class="story">
+    <div class="wrap">
+      <div class="story-grid reveal">
+        <img src="https://images.pexels.com/photos/30099422/pexels-photo-30099422.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Whitewashed trulli houses in Apulia, Italy, under a clear sky">
+        <div>
+          <div class="eyebrow">Milan, 2022 →</div>
+          <h2>Accessible luxury, made where it's made.</h2>
+          <p>Iyaly was founded in 2022 by Damiano Fornello and co-founder Ciro, built on a simple bet: that fine perfumery, skincare, and haircare made in Italy shouldn't require a luxury-house price tag to reach people.</p>
+          <p>Every bottle and jar is produced in Italy, backed by dermatological testing on the personal-care lines and a straightforward 14-day return policy on unopened goods.</p>
+          <div class="story-facts reveal stagger">
+            <div><h4>Made in Italy</h4><p>Manufactured domestically, not outsourced or white-labelled abroad.</p></div>
+            <div><h4>Founded 2022</h4><p>A young house, still building its catalogue — currently 400+ products.</p></div>
+            <div><h4>-40% for Ambassadors</h4><p>Ambassadors pay 40% less than retail on everything, for life — Clients pay retail.</p></div>
+            <div><h4>Tested, Not Just Styled</h4><p>Personal-care lines carry dermatological and nickel testing.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= KIT / AMBASSADOR VISUAL ================= -->
+  <div class="kit-band">
+    <div class="kit-split">
+      <div class="kit-panel reveal">
+        <div class="eyebrow">Starting Out</div>
+        <h2>Everything to start, in one link.</h2>
+        <p>Ambassadors sign up directly on iyaly.com through my personal link below. From day one, every purchase is 40% off and earns you points and money — and every order from your network counts toward your next rank.</p>
+        <div class="kit-stats reveal stagger">
+          <div class="kit-stat"><b>-40%</b><span>Off, For Life</span></div>
+          <div class="kit-stat"><b>10</b><span>Ranks To Climb</span></div>
+          <div class="kit-stat"><b>€6,200</b><span>Avg. Top Earnings/Mo</span></div>
+        </div>
+        <a class="btn btn-primary" style="margin-top:28px;" href="https://iyaly.com/referral/AR-246-7333" target="_blank" rel="noopener">Start as an Ambassador →</a>
+      </div>
+      <div class="kit-media">
+        <img src="https://images.pexels.com/photos/36482359/pexels-photo-36482359.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Perfume bottle nestled in gift box packaging">
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= FINAL CTA ================= -->
+  <section class="cta-band">
+    <div class="wrap reveal">
+      <h2>Pay full price, or get paid?</h2>
+      <p>The full Iyaly library — Profumo di Puglia, the numbered collection, and current novelties — is 40% cheaper for Ambassadors, for life, and every order you and your network place earns you money on top.</p>
+      <a class="btn btn-primary" href="https://iyaly.com/referral/AR-246-7333" target="_blank" rel="noopener">Become an Ambassador →</a>
+      <div class="hero-note">Or <a href="https://iyaly.com/referral/AR-246-7333" target="_blank" rel="noopener" style="text-decoration:underline; color:#F6E3D3;">shop as a Client at retail price</a> — both open through my personal Iyaly link.</div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>Iyaly S.r.l. · Via Pola 23, 20124 Milan, Italy</div>
+        <div>Page maintained by an independent Iyaly Ambassador</div>
+      </div>
+      <div class="disclosure">
+        Disclosure: I'm an independent Ambassador for Iyaly, not an Iyaly employee. Links on this page are my personal referral link (AR-246-7333); I earn points and commission on orders placed through it, whether you shop as a Client or join as an Ambassador, at no extra cost to you. Product names, prices, and the -40% Ambassador rate are provided for information and are subject to change on iyaly.com — confirm current pricing at checkout. Rank requirements and average earnings are Iyaly's own published figures and are not guaranteed. Photography on this page is free-license stock imagery used for atmosphere, not photographs of the actual Iyaly products or packaging.
+      </div>
+    </div>
+  </footer>
+
+<script>
+  const items = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); }
+      });
+    }, { threshold:0.12 });
+    items.forEach(el=>io.observe(el));
+  } else {
+    items.forEach(el=>el.classList.add('is-visible'));
+  }
+</script>
+
+</body>
+</html>
